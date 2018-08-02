@@ -1,23 +1,33 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+
 [dev-packages]
-"bumpversion" = "*"
-"wheel" = "*"
-"watchdog" = "*"
+
+bumpversion = "*"
+wheel = "*"
+watchdog = "*"
 "flake8" = "*"
-"tox" = "*"
-"coverage" = "*"
-"Sphinx" = "*"
-"twine" = "*"
-"pytest" = "*"
-"pytest-runner" = "*"
+tox = "*"
+coverage = "*"
+sphinx = "*"
+twine = "*"
+pytest = "*"
+pytest-runner = "*"
+jupyter = "*"
+
 
 [packages]
-"RPi.GPIO" = "*"
+
+pigpio = "*"
+gpiozero = "*"
+RPLCD = "*"
 "smbus2" = "*"
 
+
 [requires]
+
 python_version = "3.7"
