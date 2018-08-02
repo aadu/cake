@@ -1,7 +1,9 @@
-
+import atexit
 import time
-import pigpio
+from collections import namedtuple
+from dataclasses import dataclass
 
+import pigpio
 
 def msleep(milliseconds):
     time.sleep(milliseconds / 1000)
@@ -9,6 +11,12 @@ def msleep(milliseconds):
 
 def usleep(microseconds):
     time.sleep(microseconds / 1000000)
+
+@dataclass
+class LCDConfig:
+    rows: int
+    cols: int
+    dotsize: int
 
 
 class SMBUS:
@@ -18,6 +26,7 @@ class SMBUS:
         self.address = address
         self.pi = pigpio.pi(host=host, port=port)
         self.handle = self.pi.i2c_open(self.bus, self.address)
+        atexit.register(self.close)
 
     def write_byte(self, address, data):
         self.pi.i2c_write_byte(self.handle, data)
@@ -28,10 +37,11 @@ class SMBUS:
 
 class LCD:
 
-    def __init__(self, bus=1, address=0x27, backlight=True, **kwargs):
+    def __init__(self, bus=1, address=0x27, backlight=True, rows=2, cols=16, dotsize=8, **kwargs):
         self._address = address
         self._backlight = backlight
         self.bus = SMBUS(bus, address, **kwargs)
+        self.lcd = LCDConfig(rows, cols, dotsize)
         self.initialize()
 
     def initialize(self):
