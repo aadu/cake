@@ -76,6 +76,10 @@ class LCD:
         msleep(2)
         self._write(buf & 0xFB)  # Make EN = 0
 
+    def backlight(self):
+        self._backlight = not self._backlight
+        self._send_instruction(0x00)
+
     def clear(self):
         self._send_instruction(0x01)  # Clear Screen
 
