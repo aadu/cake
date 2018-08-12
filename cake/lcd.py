@@ -221,6 +221,12 @@ class LCD:
                     self.cursor_pos = (0, self.lcd.cols - 1)
                 self.recent_auto_linebreak = True
 
+    def write_word(self, word, clear=True):
+        if clear:
+            self.clear()
+        for char in word:
+            self.write(ord(char))
+
     def print(self):
         lines = [''.join([chr(c) for c in row]) for row in self._content]
         print('\n'.join(lines))
@@ -238,3 +244,6 @@ def sliding_window(seq, lookahead):
     for elem in it:
         result = result[1:] + (elem,)
         yield result
+
+
+# lcd = LCD(host='192.168.87.212')
