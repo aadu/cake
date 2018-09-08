@@ -74,6 +74,14 @@ class SMBUS:
         self.bus = bus
         self.address = address
         self.pi = pigpio.pi(host=host, port=port)
+        try:
+            self.handle = self.pi.i2c_open(self.bus, self.address)
+        except:
+            for i in range(10):
+                try:
+                    self.pi.i2c_close(i)
+                except:
+                    pass
         self.handle = self.pi.i2c_open(self.bus, self.address)
         atexit.register(self.close)
 
